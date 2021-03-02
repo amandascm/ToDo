@@ -23,7 +23,7 @@ const routes = [
 export default function Routes() {
   return (
     <BrowserRouter>
-      <NavBar title="ToDo" routes={routes} />
+      <NavBar routes={routes} />
       <Switch>
         {routes.map((route) => (
           <Route key={route.path} exact path={route.path} component={route.component} />
