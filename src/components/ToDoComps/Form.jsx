@@ -12,13 +12,17 @@ export default function ToDoForm({ taskList, changeList }) {
     if (!task.trim()) {
       // eslint-disable-next-line
       alert('Task vazia');
+    } else {
+      changeList([
+        ...taskList,
+        {
+          name: task,
+          isDone: false,
+          id: new Date().getTime(),
+        },
+      ]);
+      changeTask('');
     }
-
-    changeList([
-      ...taskList,
-      task,
-    ]);
-    changeTask('');
   };
 
   const updateTask = ({ target: { value } }) => (
