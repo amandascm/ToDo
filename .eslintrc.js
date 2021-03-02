@@ -29,5 +29,8 @@ module.exports = {
       },
     ],
     'react/prop-types': 0,
+    'react/no-array-index-key': 0,
+    'max-len': 0,
+    'array-callback-return': 0,
   },
 };
