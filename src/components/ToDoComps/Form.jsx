@@ -3,23 +3,31 @@ import {
   Form, Button, Row, Col,
 } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import axios from '../../utils/api';
 
 export default function ToDoForm({ taskList, changeList }) {
   // State to keep track of the task being inserted
   const [task, changeTask] = useState('');
 
-  const addTask = (event) => {
+  const addTask = async (event) => {
     event.preventDefault();
-    changeList([
-      ...taskList,
-      {
+
+    try {
+      const response = await axios.post('/tasks', {
         name: task,
         isDone: false,
-        id: new Date().getTime(),
-      },
-    ]);
-    changeTask('');
-    toast('Created new task');
+      });
+
+      changeList([
+        ...taskList,
+        response.data,
+      ]);
+
+      changeTask('');
+      toast('Created new task');
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const updateTask = (event) => (
@@ -33,6 +41,7 @@ export default function ToDoForm({ taskList, changeList }) {
             <Form.Control maxLength="80" value={task} onChange={updateTask} type="text" placeholder="Enter your task" />
           </Form.Group>
         </Col>
+
         <Col sm={3} md={3} xl={3}>
           <Button disabled={!task.trim()} variant="dark" type="submit">
             Create

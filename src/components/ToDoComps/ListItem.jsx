@@ -6,6 +6,7 @@ import './ToDo.css';
 import { FaTrash, FaPen } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import ModalComponent from '../Modal';
+import axios from '../../utils/api';
 
 export default function ListItem({
   item, taskList, changeList,
@@ -26,25 +27,35 @@ export default function ListItem({
     setNewTaskName(value);
   };
 
-  const onSubmit = () => {
-    // Update tasks list with this task renamed when changes are saved in modal
-    changeList(taskList.map((listItem) => {
-      if (listItem.id === task.id) {
-        const newObj = {
-          ...listItem,
-          name: newTaskName,
-        };
-        return newObj;
-      }
-      return listItem;
-    }));
-    // Update this item state
-    changeTask({
-      ...task,
-      name: newTaskName,
-    });
-    setShowModal(!showModal);
-    toast('Saved changes');
+  const onSubmit = async () => {
+    try {
+      await axios.put(`/tasks/${task.id}`, {
+        ...task,
+        name: newTaskName,
+      });
+
+      // Update tasks list with this task renamed when changes are saved in modal
+      changeList(taskList.map((listItem) => {
+        if (listItem.id === task.id) {
+          const newObj = {
+            ...listItem,
+            name: newTaskName,
+          };
+          return newObj;
+        }
+        return listItem;
+      }));
+
+      // Update this item state
+      changeTask({
+        ...task,
+        name: newTaskName,
+      });
+      setShowModal(!showModal);
+      toast('Saved changes');
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const onEdit = () => {
@@ -58,27 +69,43 @@ export default function ListItem({
     setShowModal(!showModal);
   };
 
-  const onRemove = () => {
+  const onRemove = async () => {
     // Remove this item from task lists
-    changeList(
-      taskList.filter((listItem) => (listItem.id !== task.id)),
-    );
-    toast('Removed task');
+    try {
+      await axios.delete(`/tasks/${task.id}`);
+
+      changeList(
+        taskList.filter((listItem) => (listItem.id !== task.id)),
+      );
+      toast('Removed task');
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
-  const onCheck = () => {
+  const onCheck = async () => {
     // Update taskList from ToDo page when it is marked as done/undone
-    changeList(taskList.map((listItem) => {
-      if (listItem.id === item.id) {
-        return { ...listItem, isDone: !listItem.isDone };
-      }
-      return listItem;
-    }));
-    // Update this item state
-    changeTask({
-      ...task,
-      isDone: !task.isDone,
-    });
+    try {
+      await axios.put(`/tasks/${task.id}`, {
+        ...task,
+        isDone: !task.isDone,
+      });
+
+      changeList(taskList.map((listItem) => {
+        if (listItem.id === item.id) {
+          return { ...listItem, isDone: !listItem.isDone };
+        }
+        return listItem;
+      }));
+
+      // Update this item state
+      changeTask({
+        ...task,
+        isDone: !task.isDone,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -86,7 +113,7 @@ export default function ListItem({
       <div className={task.isDone ? 'todoItemDone' : 'todoItemUndone'}>
         <Row>
           <Col className="todoCols" sm="1" md="1" xl="1">
-            <input type="checkbox" onChange={onCheck} />
+            <input checked={task.isDone} type="checkbox" onChange={onCheck} />
           </Col>
           <Col className="todoCols" sm="7" md="7" xl="7">{task.name}</Col>
           <Col className="todoCols" sm="4" md="4" xl="4">

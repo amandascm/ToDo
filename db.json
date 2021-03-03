@@ -1,0 +1,14 @@
+{
+  "tasks": [
+    {
+      "name": "estudar eletromagnetismo",
+      "isDone": false,
+      "id": 1
+    },
+    {
+      "name": "caminhar",
+      "isDone": true,
+      "id": 2
+    }
+  ]
+}
