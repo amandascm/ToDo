@@ -2,7 +2,9 @@ import { React, useState } from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import './ToDo.css';
 
-export default function ListItem({ item, taskList, changeList }) {
+export default function ListItem({
+  item, taskList, changeList, onEdit,
+}) {
   // State to allow changing the item visual
   const [task, changeTask] = useState({
     name: item.name,
@@ -44,7 +46,7 @@ export default function ListItem({ item, taskList, changeList }) {
         </Col>
         <Col className="todoCols" sm="7" md="7" xl="7">{task.name}</Col>
         <Col className="todoCols" sm="4" md="4" xl="4">
-          <Button variant="dark">Edit</Button>
+          <Button variant="dark" onClick={() => onEdit(task)}>Edit</Button>
           <Button variant="danger" className="ml-3" onClick={onRemove}>Remove</Button>
         </Col>
       </Row>
