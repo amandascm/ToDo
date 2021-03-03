@@ -1,6 +1,7 @@
 import { React, useState } from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import './ToDo.css';
+import { FaTrash, FaPen } from 'react-icons/fa';
 
 export default function ListItem({
   item, taskList, changeList, onEdit,
@@ -46,8 +47,14 @@ export default function ListItem({
         </Col>
         <Col className="todoCols" sm="7" md="7" xl="7">{task.name}</Col>
         <Col className="todoCols" sm="4" md="4" xl="4">
-          <Button variant="dark" onClick={() => onEdit({ ...task })}>Edit</Button>
-          <Button variant="danger" className="ml-3" onClick={onRemove}>Remove</Button>
+          <Button variant="dark" onClick={() => onEdit({ ...task })}>
+            <FaPen />
+            {' Edit'}
+          </Button>
+          <Button variant="danger" className="ml-3" onClick={onRemove}>
+            <FaTrash />
+            {' Remove'}
+          </Button>
         </Col>
       </Row>
     </div>
