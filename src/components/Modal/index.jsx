@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 export default function ModalComponent({
-  show, toggle, title, children, onSubmit,
+  show, toggle, title, onSubmit, children,
 }) {
   return (
     <Modal show={show} onHide={toggle}>
