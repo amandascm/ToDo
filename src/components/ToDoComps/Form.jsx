@@ -25,8 +25,8 @@ export default function ToDoForm({ taskList, changeList }) {
     }
   };
 
-  const updateTask = ({ target: { value } }) => (
-    changeTask(value)
+  const updateTask = (event) => (
+    changeTask(event.target.value)
   );
   return (
     <Form onSubmit={addTask}>
