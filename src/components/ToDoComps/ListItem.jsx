@@ -46,7 +46,7 @@ export default function ListItem({
         </Col>
         <Col className="todoCols" sm="7" md="7" xl="7">{task.name}</Col>
         <Col className="todoCols" sm="4" md="4" xl="4">
-          <Button variant="dark" onClick={() => onEdit(task)}>Edit</Button>
+          <Button variant="dark" onClick={() => onEdit({ ...task })}>Edit</Button>
           <Button variant="danger" className="ml-3" onClick={onRemove}>Remove</Button>
         </Col>
       </Row>
