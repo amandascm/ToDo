@@ -1,0 +1,17 @@
+.todoItemUndone {
+    background-color: #fff1ee;
+    margin-top: 15px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.todoItemDone {
+    background-color: #e6ffda;
+    margin-top: 15px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.todoCols{
+    margin: auto;
+}
