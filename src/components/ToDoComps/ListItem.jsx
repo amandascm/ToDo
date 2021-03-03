@@ -39,11 +39,11 @@ export default function ListItem({ item, taskList, changeList }) {
   return (
     <div className={task.isDone ? 'todoItemDone' : 'todoItemUndone'}>
       <Row>
-        <Col className="todoCols" xl="1">
+        <Col className="todoCols" sm="1" md="1" xl="1">
           <input type="checkbox" onChange={onCheck} />
         </Col>
-        <Col className="todoCols">{task.name}</Col>
-        <Col className="todoCols" xl="3">
+        <Col className="todoCols" sm="7" md="7" xl="7">{task.name}</Col>
+        <Col className="todoCols" sm="4" md="4" xl="4">
           <Button variant="dark">Edit</Button>
           <Button variant="danger" className="ml-3" onClick={onRemove}>Remove</Button>
         </Col>
