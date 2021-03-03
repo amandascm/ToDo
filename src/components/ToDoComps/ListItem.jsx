@@ -4,6 +4,7 @@ import {
 } from 'react-bootstrap';
 import './ToDo.css';
 import { FaTrash, FaPen } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import ModalComponent from '../Modal';
 
 export default function ListItem({
@@ -43,6 +44,7 @@ export default function ListItem({
       name: newTaskName,
     });
     setShowModal(!showModal);
+    toast('Saved changes');
   };
 
   const onEdit = () => {
@@ -61,6 +63,7 @@ export default function ListItem({
     changeList(
       taskList.filter((listItem) => (listItem.id !== task.id)),
     );
+    toast('Removed task');
   };
 
   const onCheck = () => {

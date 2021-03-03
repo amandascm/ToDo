@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import {
   Form, Button, Row, Col,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 export default function ToDoForm({ taskList, changeList }) {
   // State to keep track of the task being inserted
@@ -18,6 +19,7 @@ export default function ToDoForm({ taskList, changeList }) {
       },
     ]);
     changeTask('');
+    toast('Created new task');
   };
 
   const updateTask = (event) => (
