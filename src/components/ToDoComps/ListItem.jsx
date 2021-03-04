@@ -54,7 +54,7 @@ export default function ListItem({
       setShowModal(!showModal);
       toast('Saved changes');
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -79,7 +79,7 @@ export default function ListItem({
       );
       toast('Removed task');
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -104,7 +104,7 @@ export default function ListItem({
         isDone: !task.isDone,
       });
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 

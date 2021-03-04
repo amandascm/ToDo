@@ -26,7 +26,7 @@ export default function ToDoForm({ taskList, changeList }) {
       changeTask('');
       toast('Created new task');
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 

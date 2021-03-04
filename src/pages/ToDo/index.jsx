@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import Page from '../../components/Page';
 import ToDoForm from '../../components/ToDoComps/Form';
 import ToDoList from '../../components/ToDoComps/List';
@@ -16,7 +17,7 @@ export default function ToDo() {
     try {
       fetchData();
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   }, []);
 
