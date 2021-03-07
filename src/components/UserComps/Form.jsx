@@ -1,11 +1,16 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import api from '../../utils/api';
 
 export default function FormComponent({
-  endpoint, user, setUser, users, setUsers, submitButton,
+  endpoint, history,
 }) {
+  const [user, setUser] = useState({
+    email: '',
+    name: '',
+  });
+
   const onChange = ({ target: { name, value } }) => {
     setUser({
       ...user,
@@ -19,7 +24,7 @@ export default function FormComponent({
       // eslint-disable-next-line no-useless-escape
       const regex = /^.*[\!\,\%\&\*\@\.\;\:\[\]\(\)\=\#\$\?\_\-\<\>\°\"\'\ª].*/;
       if (user.name.trim && !regex.test(user.name)) {
-        const response = await api.post(endpoint, user);
+        await api.post(endpoint, user);
         toast('Added user');
 
         setUser({
@@ -27,10 +32,7 @@ export default function FormComponent({
           email: '',
         });
 
-        setUsers([
-          ...users,
-          response.data,
-        ]);
+        history.goBack();
       } else {
         toast('Enter a valid name');
         setUser({
@@ -56,7 +58,7 @@ export default function FormComponent({
           <Form.Control name="name" value={user.name} type="text" placeholder="Enter your name" maxLength={50} onChange={onChange} required />
         </Form.Group>
         <Button variant="dark" type="submit">
-          {submitButton}
+          Create user
         </Button>
       </Form>
     </div>

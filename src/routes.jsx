@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import ToDo from './pages/ToDo';
 import User from './pages/User';
+import CreateUser from './components/UserComps/CreateUser';
 import NavBar from './components/NavBar';
 
 // Array of routes
@@ -24,12 +25,17 @@ const routes = [
     path: '/user',
     name: 'User',
   },
+  {
+    component: CreateUser,
+    path: '/newuser',
+    name: 'CreateUser',
+  },
 ];
 
 export default function Routes() {
   return (
     <BrowserRouter>
-      <NavBar routes={routes} />
+      <NavBar routes={routes.filter((route) => (route.component !== CreateUser))} />
       <Switch>
         {routes.map((route) => (
           <Route key={route.path} exact path={route.path} component={route.component} />

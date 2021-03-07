@@ -1,19 +1,17 @@
 import { React, useState, useEffect } from 'react';
-import { Container, Button, Form } from 'react-bootstrap';
+import {
+  Container, Button, Form,
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Page from '../../components/Page';
 import ListView from '../../components/ListView';
-import FormComponent from '../../components/UserComps/Form';
 import api from '../../utils/api';
 import ModalComponent from '../../components/Modal';
 
 export default function User() {
   const endpoint = '/users';
   const [user, setUser] = useState({
-    email: '',
-    name: '',
-  });
-  const [newUser, setNewUser] = useState({
     email: '',
     name: '',
   });
@@ -116,9 +114,7 @@ export default function User() {
 
   return (
     <Page title="User">
-      <Container>
-        <FormComponent submitButton="Create user" endpoint="/users" user={newUser} setUser={setNewUser} users={users} setUsers={setUsers} />
-      </Container>
+      <Link to="/newuser" className="btn btn-dark">New user</Link>
       <Container className="mt-5">
         <ListView columns={columns} list={users} />
       </Container>
