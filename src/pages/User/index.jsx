@@ -41,7 +41,7 @@ export default function User() {
         <Form endpoint="/users" users={users} setUsers={setUsers} />
       </Container>
       <Container className="mt-5">
-        <ListView columns={columns} endpoint={endpoint} />
+        <ListView columns={columns} list={users} />
       </Container>
     </Page>
   );
