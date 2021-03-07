@@ -1,6 +1,6 @@
 import { React } from 'react';
-import Page from '../Page';
-import FormComponent from './Form';
+import Page from '../../components/Page';
+import FormComponent from '../../components/UserComps/Form';
 
 export default function CreateUser({ history }) {
   return (

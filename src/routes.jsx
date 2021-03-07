@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import ToDo from './pages/ToDo';
 import User from './pages/User';
-import CreateUser from './components/UserComps/CreateUser';
+import CreateUser from './pages/User/CreateUser';
 import NavBar from './components/NavBar';
 
 // Array of routes
