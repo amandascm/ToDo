@@ -1,14 +1,11 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import api from '../../utils/api';
 
-export default function FormComponent({ endpoint, users, setUsers }) {
-  const [user, setUser] = useState({
-    email: '',
-    name: '',
-  });
-
+export default function FormComponent({
+  endpoint, user, setUser, users, setUsers, submitButton,
+}) {
   const onChange = ({ target: { name, value } }) => {
     setUser({
       ...user,
@@ -58,8 +55,8 @@ export default function FormComponent({ endpoint, users, setUsers }) {
           <Form.Label>Name</Form.Label>
           <Form.Control name="name" value={user.name} type="text" placeholder="Enter your name" maxLength={50} onChange={onChange} required />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
+        <Button variant="dark" type="submit">
+          {submitButton}
         </Button>
       </Form>
     </div>
