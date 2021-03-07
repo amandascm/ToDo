@@ -58,12 +58,12 @@ export default function FormComponent({ endpoint, users, setUsers }) {
       <Form onSubmit={onSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter your email" onChange={onChangeEmail} required />
+          <Form.Control value={user.email} type="email" placeholder="Enter your email" onChange={onChangeEmail} required />
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" placeholder="Enter your name" maxLength={50} onChange={onChangeName} required />
+          <Form.Control value={user.name} type="text" placeholder="Enter your name" maxLength={50} onChange={onChangeName} required />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
