@@ -9,17 +9,10 @@ export default function FormComponent({ endpoint, users, setUsers }) {
     name: '',
   });
 
-  const onChangeEmail = ({ target: { value } }) => {
+  const onChange = ({ target: { name, value } }) => {
     setUser({
       ...user,
-      email: value,
-    });
-  };
-
-  const onChangeName = ({ target: { value } }) => {
-    setUser({
-      ...user,
-      name: value,
+      [name]: value,
     });
   };
 
@@ -58,12 +51,12 @@ export default function FormComponent({ endpoint, users, setUsers }) {
       <Form onSubmit={onSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control value={user.email} type="email" placeholder="Enter your email" onChange={onChangeEmail} required />
+          <Form.Control name="email" value={user.email} type="email" placeholder="Enter your email" onChange={onChange} required />
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Name</Form.Label>
-          <Form.Control value={user.name} type="text" placeholder="Enter your name" maxLength={50} onChange={onChangeName} required />
+          <Form.Control name="name" value={user.name} type="text" placeholder="Enter your name" maxLength={50} onChange={onChange} required />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
