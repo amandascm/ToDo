@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // Components
 import Home from './pages/Home';
 import ToDo from './pages/ToDo';
+import User from './pages/User';
 import NavBar from './components/NavBar';
 
 // Array of routes
@@ -17,6 +18,11 @@ const routes = [
     component: ToDo,
     path: '/todo',
     name: 'ToDo',
+  },
+  {
+    component: User,
+    path: '/user',
+    name: 'User',
   },
 ];
 

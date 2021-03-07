@@ -10,5 +10,17 @@
       "isDone": true,
       "id": 2
     }
+  ],
+  "users": [
+    {
+      "name": "fulana",
+      "email": "f@g.com",
+      "id": 1
+    },
+    {
+      "name": "cicrano",
+      "email": "c@g.com",
+      "id": 2
+    }
   ]
 }
