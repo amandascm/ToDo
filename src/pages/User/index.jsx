@@ -25,7 +25,7 @@ export default function User() {
       setUsers(users.filter((item) => item.id !== user.id));
       toast('Removed user');
     } catch (error) {
-      toast(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -55,7 +55,7 @@ export default function User() {
         toast('Enter a valid input');
       }
     } catch (error) {
-      toast(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -111,7 +111,7 @@ export default function User() {
       const response = await api.get(endpoint);
       setUsers(response.data);
     } catch (error) {
-      toast(`User page: ${error.message}`);
+      toast.error(`User page: ${error.message}`);
     }
   };
 

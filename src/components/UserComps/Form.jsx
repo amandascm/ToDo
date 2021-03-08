@@ -59,7 +59,7 @@ export default function FormComponent({
         });
       }
     } catch (error) {
-      toast(error.message);
+      toast.error(error.message);
     }
   };
 

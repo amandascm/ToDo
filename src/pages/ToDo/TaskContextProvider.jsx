@@ -8,8 +8,12 @@ export default function TaskContextProvider({ children }) {
   const [tasks, setTasks] = useState([]);
 
   const fetchData = async () => {
-    const response = await api.get('/tasks');
-    setTasks(response.data);
+    try {
+      const response = await api.get('/tasks');
+      setTasks(response.data);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
