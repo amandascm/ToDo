@@ -1,12 +1,14 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import {
   Form, Button, Row, Col,
 } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from '../../utils/api';
+import { TaskContext } from '../../pages/ToDo/TaskContextProvider';
 
-export default function ToDoForm({ taskList, changeList }) {
+export default function ToDoForm() {
   // State to keep track of the task being inserted
+  const [tasks, setTasks] = useContext(TaskContext);
   const [task, changeTask] = useState('');
 
   const addTask = async (event) => {
@@ -18,8 +20,8 @@ export default function ToDoForm({ taskList, changeList }) {
         isDone: false,
       });
 
-      changeList([
-        ...taskList,
+      setTasks([
+        ...tasks,
         response.data,
       ]);
 

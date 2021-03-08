@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import {
   Button, Row, Col, Form,
 } from 'react-bootstrap';
@@ -7,10 +7,10 @@ import { FaTrash, FaPen } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import ModalComponent from '../Modal';
 import axios from '../../utils/api';
+import { TaskContext } from '../../pages/ToDo/TaskContextProvider';
 
-export default function ListItem({
-  item, taskList, changeList,
-}) {
+export default function ListItem({ item }) {
+  const [tasks, setTasks] = useContext(TaskContext);
   // State to allow changing the item visual
   const [task, changeTask] = useState({
     name: item.name,
@@ -35,7 +35,7 @@ export default function ListItem({
       });
 
       // Update tasks list with this task renamed when changes are saved in modal
-      changeList(taskList.map((listItem) => {
+      setTasks(tasks.map((listItem) => {
         if (listItem.id === task.id) {
           const newObj = {
             ...listItem,
@@ -74,8 +74,8 @@ export default function ListItem({
     try {
       await axios.delete(`/tasks/${task.id}`);
 
-      changeList(
-        taskList.filter((listItem) => (listItem.id !== task.id)),
+      setTasks(
+        tasks.filter((listItem) => (listItem.id !== task.id)),
       );
       toast('Removed task');
     } catch (error) {
@@ -84,14 +84,14 @@ export default function ListItem({
   };
 
   const onCheck = async () => {
-    // Update taskList from ToDo page when it is marked as done/undone
+    // Update tasks from ToDo page when it is marked as done/undone
     try {
       await axios.put(`/tasks/${task.id}`, {
         ...task,
         isDone: !task.isDone,
       });
 
-      changeList(taskList.map((listItem) => {
+      setTasks(tasks.map((listItem) => {
         if (listItem.id === item.id) {
           return { ...listItem, isDone: !listItem.isDone };
         }

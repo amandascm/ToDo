@@ -1,11 +1,13 @@
-import { React } from 'react';
+import { React, useContext } from 'react';
 import ListItem from './ListItem';
+import { TaskContext } from '../../pages/ToDo/TaskContextProvider';
 
-export default function ToDoList({ taskList, changeList }) {
+export default function ToDoList() {
+  const [tasks] = useContext(TaskContext);
   return (
     <div>
-      {taskList.map((item) => (
-        <ListItem key={item.id} item={item} taskList={taskList} changeList={changeList} />
+      {tasks.map((item) => (
+        <ListItem key={item.id} item={item} />
       ))}
     </div>
   );
