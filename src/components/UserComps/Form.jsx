@@ -23,7 +23,7 @@ export default function FormComponent({
     try {
       // eslint-disable-next-line no-useless-escape
       const regex = /^.*[\!\,\%\&\*\@\.\;\:\[\]\(\)\=\#\$\?\_\-\<\>\°\"\'\ª].*/;
-      if (user.name.trim && !regex.test(user.name)) {
+      if (user.name.trim() && !regex.test(user.name)) {
         await api.post(endpoint, user);
         toast('Added user');
 
@@ -32,7 +32,7 @@ export default function FormComponent({
           email: '',
         });
 
-        history.goBack();
+        history.push('/user');
       } else {
         toast('Enter a valid name');
         setUser({
@@ -57,7 +57,10 @@ export default function FormComponent({
           <Form.Label>Name</Form.Label>
           <Form.Control name="name" value={user.name} type="text" placeholder="Enter your name" maxLength={50} onChange={onChange} required />
         </Form.Group>
-        <Button variant="dark" type="submit">
+        <Button variant="secondary" type="button" onClick={() => history.goBack()}>
+          Back
+        </Button>
+        <Button variant="dark" type="submit" className="ml-3">
           Create user
         </Button>
       </Form>
