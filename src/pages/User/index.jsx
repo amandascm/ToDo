@@ -18,43 +18,53 @@ export default function User() {
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  const onRemoveUser = async (id) => {
+  const onRemoveUser = async () => {
     try {
-      await api.delete(`${endpoint}/${id}`);
-      setUsers(users.filter((item) => item.id !== id));
+      await api.delete(`${endpoint}/${user.id}`);
+      setUsers(users.filter((item) => item.id !== user.id));
       toast('Removed user');
     } catch (error) {
       toast(error.message);
     }
   };
 
-  const onEditUser = async (id) => {
-    try {
-      const response = await api.get(`${endpoint}/${id}`);
-      setUser(response.data);
+  const onEditUser = (id) => {
+    const mainUser = users.filter((item) => (item.id === id));
+    if (mainUser.length) {
+      setUser(mainUser[0]);
       setShowModal(!showModal);
+    } else {
+      toast("Can't find user");
+    }
+  };
+
+  const onUpdateUser = async () => {
+    try {
+      // eslint-disable-next-line no-useless-escape
+      const regex = /^.*[\!\,\%\&\*\@\.\;\:\[\]\(\)\=\#\$\?\_\-\<\>\°\"\'\ª].*/;
+      const regexEmail = /^.*[\@].*/;
+      const regexEmailWrong = /^.*[\!\,\%\&\*\;\:\[\]\(\)\=\#\$\?\ \<\>\°\"\'\ª].*/;
+      if (user.name.trim() && !regex.test(user.name) && regexEmail.test(user.email) && !regexEmailWrong.test(user.email)) {
+        await api.put(`${endpoint}/${user.id}`, { ...user });
+        toast('Updated user');
+        setUsers(users.map((item) => {
+          if (item.id === user.id) {
+            return user;
+          }
+          return item;
+        }));
+        setShowModal(!showModal);
+      } else {
+        toast('Enter a valid input');
+      }
     } catch (error) {
       toast(error.message);
     }
   };
 
-  const onUpdate = async (id) => {
-    try {
-      await api.put(`${endpoint}/${id}`, user);
-      toast('Updated user');
-      setShowModal(!showModal);
-      setUsers(users.map((item) => {
-        if (item.id === user.id) {
-          return user;
-        }
-        return item;
-      }));
-    } catch (error) {
-      toast(error.message);
-    }
+  const onClose = () => {
+    setShowModal(!showModal);
   };
-
-  const onClose = () => (setShowModal(!showModal));
 
   const columns = [
     {
@@ -72,8 +82,8 @@ export default function User() {
       render: ((_, row) => (
         <div>
           <Button variant="dark" onClick={() => onEditUser(row.id)}>Edit</Button>
-          <Button variant="danger" className="ml-2" onClick={() => onRemoveUser(row.id)}>Remove</Button>
-          <ModalComponent show={showModal} toggle={onClose} title="Edit User" onSubmit={() => onUpdate(row.id)}>
+          <Button variant="danger" className="ml-2" onClick={onRemoveUser}>Remove</Button>
+          <ModalComponent show={showModal} toggle={onClose} title="Edit User" onSubmit={onUpdateUser}>
             <Form>
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -81,7 +91,7 @@ export default function User() {
                   setUser({ ...user, email: value }))}
                 title="Email"
                 type="email"
-                placeholder={row.email}
+                placeholder={user.email}
               />
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -90,7 +100,7 @@ export default function User() {
                 )}
                 type="text"
                 maxLength={50}
-                placeholder={row.name}
+                placeholder={user.name}
               />
             </Form>
           </ModalComponent>
