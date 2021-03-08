@@ -3,6 +3,26 @@ import { Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import api from '../../utils/api';
 
+export const validName = (name) => {
+  // eslint-disable-next-line no-useless-escape
+  const regex = /^.*[\!\,\%\&\*\@\.\;\:\[\]\(\)\=\#\$\?\_\-\<\>\°\"\'\ª].*/;
+  if (name.trim() && !regex.test(name)) {
+    return true;
+  }
+  return false;
+};
+
+export const validEmail = (email) => {
+  // eslint-disable-next-line no-useless-escape
+  const regexEmail = /^.*[\@].*/;
+  // eslint-disable-next-line no-useless-escape
+  const regexEmailWrong = /^.*[\!\,\%\&\*\;\:\[\]\(\)\=\#\$\?\ \<\>\°\"\'\ª].*/;
+  if (email.trim() && regexEmail.test(email) && !regexEmailWrong.test(email)) {
+    return true;
+  }
+  return false;
+};
+
 export default function FormComponent({
   endpoint, history,
 }) {
@@ -21,9 +41,7 @@ export default function FormComponent({
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      // eslint-disable-next-line no-useless-escape
-      const regex = /^.*[\!\,\%\&\*\@\.\;\:\[\]\(\)\=\#\$\?\_\-\<\>\°\"\'\ª].*/;
-      if (user.name.trim() && !regex.test(user.name)) {
+      if (validName(user.name) && validEmail(user.email)) {
         await api.post(endpoint, user);
         toast('Added user');
 

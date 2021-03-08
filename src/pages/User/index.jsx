@@ -8,6 +8,7 @@ import Page from '../../components/Page';
 import ListView from '../../components/ListView';
 import api from '../../utils/api';
 import ModalComponent from '../../components/Modal';
+import { validName, validEmail } from '../../components/UserComps/Form';
 
 export default function User() {
   const endpoint = '/users';
@@ -40,11 +41,7 @@ export default function User() {
 
   const onUpdateUser = async () => {
     try {
-      // eslint-disable-next-line no-useless-escape
-      const regex = /^.*[\!\,\%\&\*\@\.\;\:\[\]\(\)\=\#\$\?\_\-\<\>\°\"\'\ª].*/;
-      const regexEmail = /^.*[\@].*/;
-      const regexEmailWrong = /^.*[\!\,\%\&\*\;\:\[\]\(\)\=\#\$\?\ \<\>\°\"\'\ª].*/;
-      if (user.name.trim() && !regex.test(user.name) && regexEmail.test(user.email) && !regexEmailWrong.test(user.email)) {
+      if (validName(user.name) && validEmail(user.email)) {
         await api.put(`${endpoint}/${user.id}`, { ...user });
         toast('Updated user');
         setUsers(users.map((item) => {
